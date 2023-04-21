@@ -1,0 +1,131 @@
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+class DrawPanel extends JPanel {
+
+    Random rand = new Random ();
+    ArrayList<Actor> actorList = new ArrayList<>();
+
+    int random (int K)
+    {
+	return rand.nextInt (K);
+    }
+
+
+    // Any code for drawing needs to begin in the paintComponent() method
+    // (which can call other methods).
+
+    public void paintComponent (Graphics g)
+    {
+        super.paintComponent (g);
+
+	// Draw white background:
+	Dimension D = this.getSize ();
+	g.setColor (Color.white);
+	g.fillRect (0,0, D.width, D.height);
+	System.out.println ("Width and height of drawing area: " + D.width + " " + D.height);
+
+	for (int i=0; i<actorList.size(); i++) {
+
+	    // Get the i-th actor.
+	    Actor a = actorList.get (i);
+
+	    // Set the font size to be the number of movies.
+	    Font f = new Font ("Serif", Font.PLAIN, a.numMovies);
+	    g.setFont (f);
+
+	    // Color: the three numbers are R,G,B values.
+	    Color color = new Color (0,0,255-a.numMovies);
+	    g.setColor (color);
+
+	    // We'll print out the length in pixels of the string, and the height of the string.
+	    FontMetrics fm = g.getFontMetrics();
+	    int stringWidthInPixels = fm.stringWidth (a.name);
+	    int stringHeight = fm.getHeight();
+	    System.out.println ("Drawing: " + a.name + " " + a.numMovies + " width=" + stringWidthInPixels + " height=" + stringHeight);
+
+	    // Random location: for the bottom left of the first letter. Which
+	    // means the string could go out of the drawing area.
+	    int x = random (D.width - 20);
+	    int y = random (D.height - 20) - 20;
+
+	    // Now draw the string at the given location.
+	    g.drawString (a.name, x,y);
+	}
+    }
+
+}
+
+class ActorCloudFrame extends JFrame {
+
+    DrawPanel drawPanel;
+
+    public ActorCloudFrame ()                          // The constructor.
+    {
+        setSize (500,500);                             // The overall size (pixels).
+        Container cPane = this.getContentPane();
+        drawPanel = new DrawPanel ();                  // Place panel in center.
+        cPane.add (drawPanel, BorderLayout.CENTER);
+	//setVisible (true);                             // Bring up the window.
+    }
+
+}
+
+
+public class ActorCloudGUI {
+
+    public static void main (String[] argv)
+    {
+	// This makes a frame object that itself makes the drawing panel
+	ActorCloudFrame f = new ActorCloudFrame ();
+
+	//Some hand-created test data:
+	ArrayList<Actor> actorList = makeTestActorList ();
+
+	// Comment out the above line, and un-comment the two lines below
+	//ArrayList<Actor> actorList = ActorListMaker.getSortedActorList ();
+	//actorList = reduceActorList (actorList, 10);
+
+	// Let the drawing code have access to the list of actors:
+	f.drawPanel.actorList = actorList;
+
+	// Launch the GUI:
+	f.setVisible (true);
+    }
+
+   static ArrayList<Actor> reduceActorList (ArrayList<Actor> actorList, int N)
+    {
+	// WRITE YOUR CODE HERE to create a new array list (of actors)
+	// with at most N elements, copying over the first N (or fewer)
+	// elements from actorList. The idea is to reduce clutter in the cloud.
+
+	// Temporarily:
+	return null;
+    }
+
+
+    static ArrayList<Actor> makeTestActorList ()
+    {
+	ArrayList<Actor> actors = new ArrayList<>();
+	Actor a = new Actor();
+	a.name = "Samuel L. Jackson";  a.numMovies=67;
+	actors.add (a);
+	a = new Actor();
+	a.name = "Robert De Niro";  a.numMovies=57;
+	actors.add (a);
+	a = new Actor();
+	a.name = "Bruce Willis";  a.numMovies=51;
+	actors.add (a);
+	a = new Actor();
+	a.name = "Matt Damon";  a.numMovies=48;
+	actors.add (a);
+	a = new Actor();
+	a.name = "Morgan Freeman";  a.numMovies=46;
+	actors.add (a);
+	return actors;
+    }
+
+}
