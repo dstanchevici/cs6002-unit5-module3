@@ -28,7 +28,7 @@ class DrawPanel extends JPanel {
 	g.fillRect (0,0, D.width, D.height);
 	System.out.println ("Width and height of drawing area: " + D.width + " " + D.height);
 
-	for (int i=0; i<actorList.size(); i++) {
+	for (int i=actorList.size()-1; i>=0; i--) {
 
 	    // Get the i-th actor.
 	    Actor a = actorList.get (i);
@@ -39,7 +39,7 @@ class DrawPanel extends JPanel {
 
 	    // Color: the three numbers are R,G,B values.
 	    //Color color = new Color (0,0,255-a.numMovies);
-	    int colorModifier = a.numMovies*2;
+	    int colorModifier = a.numMovies*3;
 	    int red = random(255-colorModifier);
 	    int green = random(255-colorModifier);
 	    int blue = random(255-colorModifier);
@@ -100,11 +100,11 @@ public class ActorCloudGUI3 {
 	ActorCloudFrame f = new ActorCloudFrame ();
 
 	//Some hand-created test data:
-	ArrayList<Actor> actorList = makeTestActorList ();
+	//ArrayList<Actor> actorList = makeTestActorList ();
 
 	// Comment out the above line, and un-comment the two lines below
-	//ArrayList<Actor> actorList = ActorListMaker.getSortedActorList ();
-	//actorList = reduceActorList (actorList, 10);
+	ArrayList<Actor> actorList = ActorListMaker.getSortedActorList ();
+	actorList = reduceActorList (actorList, 53827);
 
 	// Let the drawing code have access to the list of actors:
 	f.drawPanel.actorList = actorList;
@@ -120,12 +120,12 @@ public class ActorCloudGUI3 {
 	// elements from actorList. The idea is to reduce clutter in the cloud.
 
 	ArrayList<Actor> reducedList = new ArrayList<>();
+	
 	for (int i=0; i<N; i++) {
 	    Actor a = actorList.get(i);
 	    reducedList.add (a);
 	}
 
-	// Temporarily:
 	return reducedList;
     }
 
