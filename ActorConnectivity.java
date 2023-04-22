@@ -22,7 +22,7 @@ public class ActorConnectivity {
 	    a.x = 5 + r*Math.cos(theta);
 	    a.y = 5 + r*Math.sin(theta);
 	    DrawTool.drawCircle (a.x,a.y, 0.1);
-	    //DrawTool.drawSmallLabel (a.x, a.y, a.name);
+	    DrawTool.drawSmallLabel (a.x, a.y, a.name);
 	}
 
 	// Draw the connecting links between actors.

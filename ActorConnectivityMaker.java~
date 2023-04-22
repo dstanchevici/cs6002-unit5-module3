@@ -13,7 +13,7 @@ public class ActorConnectivityMaker {
 	ArrayList<Actor> actorList = ActorListMaker.getSortedActorList ();
 
 	// Write code in the method reduceActorList to pick the first N:
-	actorList = reduceActorList (actorList, N);
+	//actorList = reduceActorList (actorList, N);
 
 	// 2. Build a hashmap of actor names to their Actor objects.
 
